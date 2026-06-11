@@ -52,10 +52,10 @@ private boolean isIssued;
       @Override
       public String toString()
            {
-            return "Book ID: " + bookId + 
-                   "\nTitle: " + title + 
-                   "\nAuthor: " + author + 
-                   "\nAvailable: " + (isIssued ? "No" : "Yes");             
+            return "  Book ID: " + bookId + 
+                 "\n    Title: " + title + 
+                 "\n   Author: " + author + 
+                 "\nAvailable: " + (isIssued ? "No" : "Yes");             
            }     
            
 
