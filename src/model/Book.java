@@ -47,15 +47,33 @@ private boolean isIssued;
            {
             return bookId;
            }
+
+
+      public void issueBook()
+          {
+             if(!isIssued)
+               isIssued=true;
+             else
+               System.out.println("Book is already issued");
+          }
+
+      public void returnBook()
+          {
+               if(isIssued)
+                    isIssued=false;
+               else
+                    System.out.println("Book is not issued");
+
+          }
       
            
       @Override
       public String toString()
            {
-            return "  Book ID: " + bookId + 
-                 "\n    Title: " + title + 
-                 "\n   Author: " + author + 
-                 "\nAvailable: " + (isIssued ? "No" : "Yes");             
+            return "Book ID: " + bookId + 
+                   "\nTitle: " + title + 
+                   "\nAuthor: " + author + 
+                   "\nAvailable: " + (isIssued ? "No" : "Yes");             
            }     
            
 
