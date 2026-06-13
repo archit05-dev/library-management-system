@@ -1,77 +1,107 @@
+import java.io.*;
 import model.*;
+
 
 public class Main
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         Library library = new Library();
 
-        // Create Users
-        User u1 = new User(1, "Archit");
-        User u2 = new User(2, "Rahul");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        // Add Users
-        library.addUser(u1);
-        library.addUser(u2);
+        int choice = 0;
+        do
+        {
+                System.out.println("\n===== Library Management System =====");
+                System.out.println("1. Add Book");
+                System.out.println("2. Add User");
+                System.out.println("3. Issue Book");
+                System.out.println("4. Return Book");
+                System.out.println("5. Display Books");
+                System.out.println("6. Display Users");
+                System.out.println("7. Display Transactions");
+                System.out.println("8. Exit");
+        
+                System.out.println("Enter your choice: ");
 
-        // Create Books
-        Book b1 = new Book(
-                101,
-                "Merchant Of Venice",
-                "William Shakespeare"
-        );
+                try
+                {
+                        choice = Integer.parseInt(br.readLine());
 
-        Book b2 = new Book(
-                102,
-                "Atomic Habits",
-                "James Clear"
-        );
+                }
+                catch(IOException e)
+                {
+                        System.out.println("Error reading input. Please try again.");
+                        continue;
+                }
+                catch(NumberFormatException e)
+                {
+                        System.out.println("Invalid input. Please enter a number.");
+                        continue;
+                }
 
-        // Add Books
-        library.addBook(b1);
-        library.addBook(b2);
+                switch(choice)
+                {
+                    case 1:
+                        System.out.println("Enter Book ID: ");
+                        int bookId = Integer.parseInt(br.readLine());
+                        System.out.println("Enter Book Title: ");
+                        String title = br.readLine();
+                        System.out.println("Enter Book Author: ");
+                        String author = br.readLine();
+                        Book book = new Book(bookId, title, author);
+                        library.addBook(book);
+                        System.out.println("Book added successfully.");
+                        break;
+                        
+                    case 2:
+                        System.out.println("Enter User ID: ");
+                        int userId = Integer.parseInt(br.readLine());
+                        System.out.println("Enter User Name: ");
+                        String name = br.readLine();
+                        User user = new User(userId, name);
+                        library.addUser(user);
+                        System.out.println("User added successfully.");
+                        break;
 
-        // Display Initial State
-        System.out.println("\n===== BOOKS BEFORE ISSUE =====");
-        library.displayBooks();
+                    case 3:
+                        System.out.println("Enter Transaction ID: ");
+                        int transactionId = Integer.parseInt(br.readLine());
+                        System.out.println("Enter User ID: ");
+                        int issueUserId = Integer.parseInt(br.readLine());
+                        System.out.println("Enter Book ID: ");
+                        int issueBookId = Integer.parseInt(br.readLine());
+                        System.out.println("Enter Issue Date (YYYY-MM-DD): ");
+                        String issueDate = br.readLine();
+                        library.issueBook(transactionId, issueUserId, issueBookId, issueDate);
+                        break;
+                    case 4:
+                        System.out.println("Enter Transaction ID: ");
+                        int returnTransactionId = Integer.parseInt(br.readLine());
+                        System.out.println("Enter Return Date (YYYY-MM-DD): ");
+                        String returnDate = br.readLine();
+                        library.returnBook(returnTransactionId, returnDate);
+                        break;
+                    case 5:     
+                        library.displayBooks();
+                        break;
+                    case 6:
+                        library.displayUsers();
+                        break;
+                    case 7:    
+                        library.displayTransactions();
+                        break; 
+                    case 8:
+                        System.out.println("Thank you for using the Library Management System. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        
+                        
+                }
+        }
+        while(choice != 8);
 
-        // Issue Book
-        System.out.println("\n===== ISSUE BOOK =====");
-        library.issueBook(
-                1,              // transactionId
-                1,              // userId
-                101,            // bookId
-                "2026-06-12"    // issueDate
-        );
-
-        // Display Books After Issue
-        System.out.println("\n===== BOOKS AFTER ISSUE =====");
-        library.displayBooks();
-
-        // Display Transactions
-        System.out.println("\n===== TRANSACTIONS =====");
-        library.displayTransactions();
-
-        // Return Book
-        System.out.println("\n===== RETURN BOOK =====");
-        library.returnBook(
-                1,
-                "2026-06-20"
-        );
-
-        // Display Books After Return
-        System.out.println("\n===== BOOKS AFTER RETURN =====");
-        library.displayBooks();
-
-        // Display Transactions Again
-        System.out.println("\n===== TRANSACTIONS AFTER RETURN =====");
-        library.displayTransactions();
-
-        // Try Returning Again
-        System.out.println("\n===== RETURN SAME BOOK AGAIN =====");
-        library.returnBook(
-                1,
-                "2026-06-21"
-        );
     }
 }
